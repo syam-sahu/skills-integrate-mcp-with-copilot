@@ -52,5 +52,53 @@
     "schedule": "Fridays, 4:00 PM - 5:30 PM",
     "max_participants": 12,
     "participants": ["charlotte@mergington.edu", "henry@mergington.edu"]
+  },
+  "Music Club": {
+    "description": "Learn music theory, perform in concerts, and collaborate with fellow musicians",
+    "schedule": "Mondays and Thursdays, 3:30 PM - 5:00 PM",
+    "max_participants": 25,
+    "participants": ["lucas@mergington.edu", "grace@mergington.edu"]
+  },
+  "Orchestra": {
+    "description": "Play orchestral instruments and perform classical and contemporary pieces",
+    "schedule": "Tuesdays and Fridays, 4:00 PM - 5:30 PM",
+    "max_participants": 40,
+    "participants": ["mason@mergington.edu", "lily@mergington.edu", "jackson@mergington.edu"]
+  },
+  "Photography Club": {
+    "description": "Explore photography techniques, edit photos, and participate in photo exhibitions",
+    "schedule": "Wednesdays, 3:30 PM - 5:00 PM",
+    "max_participants": 15,
+    "participants": ["abigail@mergington.edu", "logan@mergington.edu"]
+  },
+  "Dance Club": {
+    "description": "Learn various dance styles and perform in school events",
+    "schedule": "Mondays, Wednesdays, Fridays, 4:00 PM - 5:00 PM",
+    "max_participants": 20,
+    "participants": ["isabella@mergington.edu", "ethan@mergington.edu"]
+  },
+  "Creative Writing Club": {
+    "description": "Write poetry, short stories, and creative pieces; participate in workshops and readings",
+    "schedule": "Thursdays, 4:00 PM - 5:30 PM",
+    "max_participants": 18,
+    "participants": ["chloe@mergington.edu", "alexander@mergington.edu"]
+  },
+  "Film & Video Production": {
+    "description": "Create short films and videos, learn cinematography and editing techniques",
+    "schedule": "Tuesdays, 3:30 PM - 5:30 PM",
+    "max_participants": 16,
+    "participants": ["zoe@mergington.edu", "ryan@mergington.edu"]
+  },
+  "Art Gallery & Sculpture": {
+    "description": "Create and exhibit sculptural works, explore 3D art forms",
+    "schedule": "Fridays, 3:30 PM - 5:00 PM",
+    "max_participants": 12,
+    "participants": ["lily@mergington.edu", "samuel@mergington.edu"]
+  },
+  "Choir": {
+    "description": "Sing in harmony, perform at concerts and school events",
+    "schedule": "Mondays and Fridays, 3:30 PM - 4:30 PM",
+    "max_participants": 30,
+    "participants": ["aria@mergington.edu", "joseph@mergington.edu"]
   }
 }
