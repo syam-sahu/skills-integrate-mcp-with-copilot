@@ -10,19 +10,20 @@
     <header>
       <h1>Mergington High School</h1>
       <h2>Extracurricular Activities</h2>
+      <p>Explore our diverse range of activities and join one that interests you!</p>
     </header>
 
     <main>
       <section id="activities-container">
-        <h3>Available Activities</h3>
+        <h3>📌 Available Activities</h3>
         <div id="activities-list">
           <!-- Activities will be loaded here -->
           <p>Loading activities...</p>
         </div>
       </section>
 
-      <section id="signup-container">
-        <h3>Sign Up for an Activity</h3>
+      <aside id="signup-container">
+        <h3>✍️ Sign Up for an Activity</h3>
         <form id="signup-form">
           <div class="form-group">
             <label for="email">Student Email:</label>
@@ -31,14 +32,13 @@
           <div class="form-group">
             <label for="activity">Select Activity:</label>
             <select id="activity" required>
-              <option value="">-- Select an activity --</option>
-              <!-- Activity options will be loaded here -->
+              <option value="">-- Loading activities --</option>
             </select>
           </div>
           <button type="submit">Sign Up</button>
         </form>
         <div id="message" class="hidden"></div>
-      </section>
+      </aside>
     </main>
 
     <footer>
