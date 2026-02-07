@@ -24,9 +24,19 @@ app.mount("/static", StaticFiles(directory=os.path.join(Path(__file__).parent,
 activities_file = current_dir / "activities.json"
 if activities_file.exists():
     with activities_file.open("r", encoding="utf-8") as f:
-        activities = json.load(f)
+        categories = json.load(f)
 else:
-    activities = {}
+    categories = {}
+
+
+# Helper function to find an activity across all categories
+def find_activity(activity_name: str):
+    """Search for an activity across all categories and return (category, activity)"""
+    for category_name, category_data in categories.items():
+        if "activities" in category_data:
+            if activity_name in category_data["activities"]:
+                return category_data["activities"][activity_name]
+    return None
 
 
 @app.get("/")
@@ -36,18 +46,16 @@ def root():
 
 @app.get("/activities")
 def get_activities():
-    return activities
+    return categories
 
 
 @app.post("/activities/{activity_name}/signup")
 def signup_for_activity(activity_name: str, email: str):
     """Sign up a student for an activity"""
-    # Validate activity exists
-    if activity_name not in activities:
+    # Find the activity
+    activity = find_activity(activity_name)
+    if activity is None:
         raise HTTPException(status_code=404, detail="Activity not found")
-
-    # Get the specific activity
-    activity = activities[activity_name]
 
     # Validate student is not already signed up
     if email in activity["participants"]:
@@ -64,12 +72,10 @@ def signup_for_activity(activity_name: str, email: str):
 @app.delete("/activities/{activity_name}/unregister")
 def unregister_from_activity(activity_name: str, email: str):
     """Unregister a student from an activity"""
-    # Validate activity exists
-    if activity_name not in activities:
+    # Find the activity
+    activity = find_activity(activity_name)
+    if activity is None:
         raise HTTPException(status_code=404, detail="Activity not found")
-
-    # Get the specific activity
-    activity = activities[activity_name]
 
     # Validate student is signed up
     if email not in activity["participants"]:
