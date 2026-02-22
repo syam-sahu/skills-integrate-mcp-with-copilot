@@ -8,52 +8,73 @@ document.addEventListener("DOMContentLoaded", () => {
   async function fetchActivities() {
     try {
       const response = await fetch("/activities");
-      const activities = await response.json();
+      const categories = await response.json();
 
-      // Clear loading message
+      // Clear loading message and activities list
       activitiesList.innerHTML = "";
+      activitySelect.innerHTML = '<option value="">-- Select an activity --</option>';
 
-      // Populate activities list
-      Object.entries(activities).forEach(([name, details]) => {
-        const activityCard = document.createElement("div");
-        activityCard.className = "activity-card";
+      // Iterate through categories
+      Object.entries(categories).forEach(([categoryName, categoryData]) => {
+        // Create category section
+        const categorySection = document.createElement("div");
+        categorySection.className = "activity-category";
+        
+        const categoryHeader = document.createElement("h3");
+        categoryHeader.className = "category-header";
+        categoryHeader.innerHTML = `<span class="category-icon">${categoryData.icon || "📌"}</span> ${categoryName}`;
+        categorySection.appendChild(categoryHeader);
 
-        const spotsLeft =
-          details.max_participants - details.participants.length;
+        const activitiesGrid = document.createElement("div");
+        activitiesGrid.className = "activities-grid";
 
-        // Create participants HTML with delete icons instead of bullet points
-        const participantsHTML =
-          details.participants.length > 0
-            ? `<div class="participants-section">
-              <h5>Participants:</h5>
-              <ul class="participants-list">
-                ${details.participants
-                  .map(
-                    (email) =>
-                      `<li><span class="participant-email">${email}</span><button class="delete-btn" data-activity="${name}" data-email="${email}">❌</button></li>`
-                  )
-                  .join("")}
-              </ul>
-            </div>`
-            : `<p><em>No participants yet</em></p>`;
+        // Iterate through activities in this category
+        Object.entries(categoryData.activities).forEach(([name, details]) => {
+          const activityCard = document.createElement("div");
+          activityCard.className = "activity-card";
 
-        activityCard.innerHTML = `
-          <h4>${name}</h4>
-          <p>${details.description}</p>
-          <p><strong>Schedule:</strong> ${details.schedule}</p>
-          <p><strong>Availability:</strong> ${spotsLeft} spots left</p>
-          <div class="participants-container">
-            ${participantsHTML}
-          </div>
-        `;
+          const spotsLeft =
+            details.max_participants - details.participants.length;
 
-        activitiesList.appendChild(activityCard);
+          // Create participants HTML
+          const participantsHTML =
+            details.participants.length > 0
+              ? `<div class="participants-section">
+                <h5>Participants (${details.participants.length}):</h5>
+                <ul class="participants-list">
+                  ${details.participants
+                    .map(
+                      (email) =>
+                        `<li><span class="participant-email">${email}</span><button class="delete-btn" data-activity="${name}" data-email="${email}">❌</button></li>`
+                    )
+                    .join("")}
+                </ul>
+              </div>`
+              : `<p><em>No participants yet</em></p>`;
 
-        // Add option to select dropdown
-        const option = document.createElement("option");
-        option.value = name;
-        option.textContent = name;
-        activitySelect.appendChild(option);
+          const availabilityClass = spotsLeft <= 3 ? "availability-low" : spotsLeft <= 0 ? "availability-full" : "availability-good";
+
+          activityCard.innerHTML = `
+            <h4>${name}</h4>
+            <p class="description">${details.description}</p>
+            <p><strong>Schedule:</strong> ${details.schedule}</p>
+            <p class="availability ${availabilityClass}"><strong>Availability:</strong> ${spotsLeft > 0 ? spotsLeft + " spots left" : "FULL"}</p>
+            <div class="participants-container">
+              ${participantsHTML}
+            </div>
+          `;
+
+          activitiesGrid.appendChild(activityCard);
+
+          // Add option to select dropdown
+          const option = document.createElement("option");
+          option.value = name;
+          option.textContent = `${categoryName} • ${name}`;
+          activitySelect.appendChild(option);
+        });
+
+        categorySection.appendChild(activitiesGrid);
+        activitiesList.appendChild(categorySection);
       });
 
       // Add event listeners to delete buttons
